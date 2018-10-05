@@ -6,8 +6,7 @@ MonoImporter:
   defaultReferences:
   - prefabProjectile: {fileID: 1515003202614994, guid: ffc6b3a0af8b7470092172747fa87917,
       type: 2}
-  - launchPoint: {fileID: 1515003202614994, guid: ffc6b3a0af8b7470092172747fa87917,
-      type: 2}
+  - launchPoint: {instanceID: 0}
   - projectile: {fileID: 1515003202614994, guid: ffc6b3a0af8b7470092172747fa87917,
       type: 2}
   executionOrder: 0
