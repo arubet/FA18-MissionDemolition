@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 public class ProjectileLine : MonoBehaviour
@@ -8,10 +7,9 @@ public class ProjectileLine : MonoBehaviour
 
     //fields set in the Unity Inspector pane
     public float minDist = 0.1f;
-    public bool _______________________;
     private LineRenderer line;
     private GameObject _poi;
-   private List<Vector3> points;
+    private List<Vector3> points;
 
     void Awake()
     {
@@ -53,19 +51,19 @@ public class ProjectileLine : MonoBehaviour
     {
         //This is called to add a point to the line
         Vector3 pt = _poi.transform.position;
-        if (points.Count > 0 && (pt - lastPoint).magnitude < minDist)
+        if (points.Count > 0 && (pt - LastPoint).magnitude < minDist)
         {
             return;
         }
         if (points.Count == 0)
         {
             //If this is the launch point...
-            Vector3 launchPos = Slingshot.S.launchPoint.transform.position;
+            Vector3 launchPos = pt - Slingshot.LAUNCH_POS;
             Vector3 launchPosDiff = pt - launchPos;
-            // ... it adds an extra bit of line to aid aiming later
+            // ... it adds an extra it of line to aid aiming later
             points.Add(pt + launchPosDiff);
             points.Add(pt);
-            line.SetVertexCount(2);
+            line.positionCount = 2;
             line.SetPosition(0, points[0]);
             line.SetPosition(1, points[1]);
             line.enabled = true;
@@ -74,14 +72,14 @@ public class ProjectileLine : MonoBehaviour
         {
             //Normal behavior of adding a point
             points.Add(pt);
-            line.SetVertexCount(points.Count);
-            line.SetPosition(points.Count - 1, lastPoint);
+            line.positionCount = points.Count;
+            line.SetPosition(points.Count - 1,LastPoint);
             line.enabled = true;
         }
     }
 
     //Returns the location of the most recently added point
-    public Vector3 lastPoint
+    public Vector3 LastPoint
     {
         get
         {
@@ -99,20 +97,23 @@ public class ProjectileLine : MonoBehaviour
         if (poi == null)
         {
             //if there is no poi,search fo one
-            if (FollowCam.S.poi != null)
+            if (FollowCam.POI != null)
             {
-                poi = FollowCam.S.poi;
-            }
-            else
-            {
-                return; // Return if we did not find a poi
+                if (FollowCam.POI.tag == "Projectile")
+                {
+                    poi = FollowCam.POI;
+                } else {
+                    return; // Return if we did not find a poi
+                }
+            }else{ 
+                return;
             }
         }
-        // If there is a poi,it's loc is added every FixedUpdate
-        AddPoint();
-        if (poi.GetComponent<Rigidbody>().IsSleeping())
-        {
-            poi = null;
+            // If there is a poi,it's loc is added every FixedUpdate
+            AddPoint();
+            if (FollowCam.POI == null)
+            {
+                poi = null;
+            }
         }
     }
-}
