@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class Slingshot : MonoBehaviour
 {
@@ -19,13 +19,11 @@ public class Slingshot : MonoBehaviour
     public Vector3 launchPos;
     public GameObject projectile;
     public bool aimingMode;
-    public Rigidbody projectileRigidbody;
+    private Rigidbody projectileRigidbody;
 
-    static public Vector3 LAUNCH_POS
-    {
-        get
-        {
-            if (S == null) return Vector3.zero;
+    static public Vector3 LAUNCH_POS{
+        get{
+            if (S == null)return Vector3.zero;
             return S.launchPos;
         }
     }
@@ -61,10 +59,10 @@ public class Slingshot : MonoBehaviour
         projectileRigidbody = projectile.GetComponent<Rigidbody>();
         projectileRigidbody.isKinematic = true;
     }
-    void Update()
+     void Update()
     {
         // If Slingshot is not in aimingMode. don't run this code
-        if (aimingMode) return;
+        if (!aimingMode) return;
         Vector3 mousePos2D = Input.mousePosition;
         mousePos2D.z = -Camera.main.transform.position.z;
         Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos2D);
@@ -85,11 +83,8 @@ public class Slingshot : MonoBehaviour
             projectileRigidbody.velocity = -mouseDelta * velocityMult;
             FollowCam.POI = projectile;
             projectile = null;
-            MissionDemolition.ShotsFired();
+            MissionDemolition.ShotFired();
             ProjectileLine.S.poi = projectile;
         }
-
     }
-
 }
-

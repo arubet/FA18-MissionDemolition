@@ -880,6 +880,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257823764008d4568ae7abb9a7a15f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numClouds: 40
+  cloudPrefab: {fileID: 0}
+  cloudPosMin: {x: -50, y: -5, z: 10}
+  cloudPosMax: {x: 150, y: 100, z: 10}
+  cloudScaleMin: 1
+  cloudScaleMax: 3
+  cloudSpeedMult: 0.5
 --- !u!114 &1379229830
 MonoBehaviour:
   m_ObjectHideFlags: 0
